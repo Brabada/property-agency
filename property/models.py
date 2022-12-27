@@ -96,3 +96,6 @@ class Owner(models.Model):
                                    related_name='owners',
                                    verbose_name='Квартиры в собственности',
                                    null=True)
+
+    def __str__(self):
+        return f"{self.name} {self.normalized_phonenumber}"
