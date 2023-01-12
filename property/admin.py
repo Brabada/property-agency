@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Flat, Complaint, Owner
 
+
 class OwnerInline(admin.StackedInline):
     model = Owner.flats.through
     raw_id_fields = ('owner',)
