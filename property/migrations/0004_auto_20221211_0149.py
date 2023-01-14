@@ -6,12 +6,13 @@ from django.db import migrations
 def set_new_building_state_by_year(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     LOWEST_YEAR_FOR_NEW_BUILDING = 2015
-    for flat in Flat.objects.all():
-        if flat.construction_year >= LOWEST_YEAR_FOR_NEW_BUILDING:
-            flat.new_building = True
-        else:
-            flat.new_building = False
-        flat.save()
+
+    Flat.objects.filter(
+        construction_year__gte=LOWEST_YEAR_FOR_NEW_BUILDING).update(
+        new_building=True)
+    Flat.objects.filter(
+        construction_year__lt=LOWEST_YEAR_FOR_NEW_BUILDING).update(
+        new_building=False)
 
 
 class Migration(migrations.Migration):
