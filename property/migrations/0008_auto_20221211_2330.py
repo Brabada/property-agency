@@ -7,11 +7,8 @@ import phonenumbers
 
 def normalize_owner_phonenumbers(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
-    for flat in Flat.objects.all():
+    for flat in Flat.objects.all().iterator():
         pure_phone = phonenumbers.parse(flat.owners_phonenumber, 'RU')
-        # if not (phonenumbers.is_valid_number(pure_phone) and
-        #         phonenumbers.is_valid_number_for_region(pure_phone, 'RU')):
-        #     pure_phone = None
         flat.owner_pure_phone = pure_phone
         flat.save()
 
